@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
 import { View, StyleSheet, TextInput, Button, Alert } from 'react-native'
 
-export const AddTodo = (props) => {
-	const { onSubmit } = props
+export const AddTodo = ({ onSubmit }) => {
 	const [value, setValue] = useState('')
 
 	const pressHandler = () => {
