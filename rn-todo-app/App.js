@@ -5,12 +5,9 @@ import { MainScreen } from './src/screens/MainScreen'
 import { TodoScreen } from './src/screens/TodoScreen'
 
 export default function App() {
-	const [todoId, setTodoId] = useState('2')
+	const [todoId, setTodoId] = useState(null)
 	const [currentScreen, setCurrentScreen] = useState(null)
-	const [todos, setTodos] = useState([
-		{ id: '1', title: 'First' },
-		{ id: '2', title: 'Second' }
-	])
+	const [todos, setTodos] = useState([])
 
 	const addTodo = (title) => {
 		const newTodo = {
@@ -44,6 +41,17 @@ export default function App() {
 		)
 	}
 
+	const updateTodo = (id, title) => {
+		setTodos((prev) =>
+			prev.map((todo) => {
+				if (todo.id === id) {
+					todo.title = title
+				}
+				return todo
+			})
+		)
+	}
+
 	const handleBack = () => {
 		setTodoId(null)
 	}
@@ -51,7 +59,7 @@ export default function App() {
 	useEffect(() => {
 		if (todoId) {
 			const selectedTodo = todos.find((todo) => todo.id === todoId)
-			setCurrentScreen(<TodoScreen onRemove={removeTodo} goBack={handleBack} todo={selectedTodo} />)
+			setCurrentScreen(<TodoScreen onSave={updateTodo} onRemove={removeTodo} goBack={handleBack} todo={selectedTodo} />)
 		} else {
 			setCurrentScreen(<MainScreen todos={todos} addTodo={addTodo} removeTodo={removeTodo} openTodo={setTodoId} />)
 		}
