@@ -1,13 +1,29 @@
 import React, { useState, useEffect } from 'react'
 import { StyleSheet, View, ScrollView, Alert } from 'react-native'
+import * as Font from 'expo-font'
+import AppLoading from 'expo-app-loading'
+
 import { Navbar } from './src/components/Navbar'
 import { MainScreen } from './src/screens/MainScreen'
 import { TodoScreen } from './src/screens/TodoScreen'
 
+async function loadApplication() {
+	await Font.loadAsync({
+		'roboto-lightItalic': require('./assets/fonts/Roboto-LightItalic.ttf'),
+		'roboto-thinItalic': require('./assets/fonts/Roboto-ThinItalic.ttf')
+	})
+}
+
 export default function App() {
+	const [isReady, setIsReady] = useState(false)
 	const [todoId, setTodoId] = useState(null)
 	const [currentScreen, setCurrentScreen] = useState(null)
-	const [todos, setTodos] = useState([])
+	const [todos, setTodos] = useState([
+		{
+			id: '1',
+			title: 'Test1'
+		}
+	])
 
 	const addTodo = (title) => {
 		const newTodo = {
@@ -65,11 +81,13 @@ export default function App() {
 		}
 	}, [todoId, todos])
 
-	return (
+	return isReady ? (
 		<ScrollView>
 			<Navbar title="Todo App" />
 			<View style={styles.container}>{currentScreen}</View>
 		</ScrollView>
+	) : (
+		<AppLoading startAsync={loadApplication} onError={(err) => console.log(err)} onFinish={() => setIsReady(true)} />
 	)
 }
 
