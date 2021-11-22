@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, StyleSheet, Platform } from 'react-native'
+import { View, StyleSheet, Platform } from 'react-native'
 import { THEME } from '../theme'
 import { AppText } from './ui/AppText'
 
