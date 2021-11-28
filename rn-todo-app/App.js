@@ -3,6 +3,7 @@ import * as Font from 'expo-font'
 import AppLoading from 'expo-app-loading'
 import { MainLayout } from './src/MainLayout'
 import { TodoState } from './src/context/todo/TodoState'
+import { ScreenState } from './src/context/screen/ScreenState'
 
 async function loadApplication() {
 	await Font.loadAsync({
@@ -15,9 +16,11 @@ export default function App() {
 	const [isReady, setIsReady] = useState(false)
 
 	return isReady ? (
-		<TodoState>
-			<MainLayout />
-		</TodoState>
+		<ScreenState>
+			<TodoState>
+				<MainLayout />
+			</TodoState>
+		</ScreenState>
 	) : (
 		<AppLoading startAsync={loadApplication} onError={(err) => console.log(err)} onFinish={() => setIsReady(true)} />
 	)

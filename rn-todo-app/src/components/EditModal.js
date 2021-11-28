@@ -5,6 +5,7 @@ import { AppButton } from './ui/AppButton'
 
 export const EditModal = ({ visible, onCancel, value, onSave }) => {
 	const [title, setTitle] = useState(value)
+
 	const saveHandler = () => {
 		if (title.trim().length < 3) {
 			Alert.alert('Warning', `min length 3. Now ${title.trim().length}`)
@@ -12,6 +13,12 @@ export const EditModal = ({ visible, onCancel, value, onSave }) => {
 			onSave(title)
 		}
 	}
+
+	const cancelHandler = () => {
+		setTitle(value)
+		onCancel()
+	}
+
 	return (
 		<Modal visible={visible} animationType="slide" transparent={false}>
 			<View style={styles.wrap}>
@@ -25,7 +32,7 @@ export const EditModal = ({ visible, onCancel, value, onSave }) => {
 					autoCapitalize
 				/>
 				<View style={styles.buttons}>
-					<AppButton onPress={onCancel} color={THEME.DANGER_COLOR}>
+					<AppButton onPress={cancelHandler} color={THEME.DANGER_COLOR}>
 						Cancel
 					</AppButton>
 					<AppButton onPress={saveHandler}>Save</AppButton>
